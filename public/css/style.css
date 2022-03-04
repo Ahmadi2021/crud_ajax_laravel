@@ -1,0 +1,232 @@
+*{
+  /* margin: 0; */
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'poppins', sans-serif;
+}
+.container{
+    background:#f4f4f4;
+    min-height: 400px;
+    width: 80%;
+    margin: auto;
+    padding: 50px;
+}
+/* *************************************** header ***************** */
+.header{
+  background: #435d7d;
+  width: 100%;
+  height: 50px;
+  padding: 10px 0;
+    }
+.header h2{
+  display: inline-block;
+  color: #ffffff;
+  padding-left: 10px;
+  margin: -5px 0;
+
+}
+.header input[type=button]{
+  float: right;
+  margin-right:20px;
+  border-radius: 5px;
+  cursor: pointer;
+  padding: 8px 10px;
+  display: inline-block;
+  background:#2f8d46;
+  border:none;
+  color:#ffffff;
+
+}
+/* ******************************** Tabel************************ */
+table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+  }
+  
+  td, th {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+  }
+/*   
+  tr:nth-child(even) {
+    background-color: #dddddd;
+  } */
+  /* ************************************** Form ***************************** */
+  form{
+    padding: 20px;
+  }
+  input[type=text], select, input[type=file] {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    margin-top: 6px;
+    margin-bottom: 16px;
+    resize: vertical;
+  }
+  
+  input[type=submit] {
+    background-color: #1f2e50;
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  input[type=submit]:hover {
+    background-color: #1b1b1b;
+  }
+
+  .delete_form{
+    padding:0 ;
+    display: inline-block;
+    float: right;
+  }
+  .delete_form button{
+    cursor: pointer;
+    background-color: transparent;
+  }
+
+  /* ************************* success and error message ********* */
+  .successSession {
+    width: 100%;
+    background: #a2c889;
+    color:#ffffff;
+    text-align: center;
+    padding: 8px 0px;
+    margin-bottom:20px;
+  }
+    .errorSessions{
+    width: 100%;
+    color:#dc3545;
+
+  }
+
+  #create_emp .errorSession ul {
+    list-style-type: none !important;
+    width: 100%;
+    /* background: #cc717a; */
+    color:#dc3545;
+    padding: 5px 10px;
+    margin-bottom:20px;
+    margin-top: 0px;
+    border-radius: 5px;
+    font-weight: 500;
+  }
+  #create_emp .d-none{
+    display: none;
+  }
+  #creatae_emp .successSession {
+    width: 100%;
+    background: #a2c889;
+    color:#ffffff;
+    text-align: center;
+    padding: 8px 0px;
+    margin-bottom:20px;
+  }
+
+
+  /* ****************************************Model Or popup ************************/
+  .model{
+    position: fixed;
+    height: 100%;
+    width: 100%;
+    background-color:rgba(0,0,0,0.2);
+    left: 0;
+    top: 0;
+    z-index: 1;
+  
+    display: none;
+    
+}
+.model-content{
+    height: 200px;
+    width: 400px;
+    background: white;
+    border:1px solid #ccc;
+    top: 0;
+    left:0;
+    margin:15% auto;
+    padding:25px;
+
+}
+.show-form .model-content{
+  height: 90%;
+  width: 50%;
+  background: white;
+  border: 1px solid #ccc;
+  top: 0;
+  left: 0;
+  margin: 1% auto;
+  padding: 25px;
+  overflow: hidden;
+  overflow-y: initial !important;
+
+}
+.model-content .closeM{
+    float: right;
+    color:red;
+    font-size: 24px;
+    font-weight: 400;
+    /*padding: 10px 20px;*/
+    cursor: pointer;
+
+}
+.model-content p{
+  margin-top: 15%;
+  font-size: 20px;
+  font-weight: 400;
+
+}
+.model-content button {
+  margin-top: 15px;
+  margin-right:20px;
+  float: right;
+  width:70px;
+  height: 30px;
+  border-radius: 5px;
+  background:#57bc57;
+  color: white;
+  border:none;
+  cursor: pointer;
+}
+.model-content .cancel{
+  background-color: #ae2121;
+}
+.model-content #cancel{
+  background-color: #ae2121;
+      margin: 0px 12px;
+      border-radius: 5px;
+      color: white;
+      border: none;
+      cursor: pointer;
+      padding: 12px 20px;
+      float: left;
+      height: 40px;
+}
+.show-model_delete{
+    display: block;    
+}
+.show-form{
+  display: block;    
+}
+/* ***************Button */
+
+.action-icon {
+  float: right;
+  background: transparent;
+  cursor: pointer;
+ 
+}
+
+/* edit image desing */
+.image-thumbnail{
+  display: block;
+  
+}
+  
+ 
