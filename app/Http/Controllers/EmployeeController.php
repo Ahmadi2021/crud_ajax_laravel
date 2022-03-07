@@ -19,8 +19,14 @@ class EmployeeController extends Controller
      */
     public function index()
     {
-        $employees = Employee::paginate(2);
+        // $employees = Employee::paginate(2);
+        $employees = Employee::all();
+        // return response()->json(['data'=>$employees]); 
         return view('employees.index')->with('employees',$employees);
+    }
+    public function ajax_index(){
+        $employees = Employee::latest('created_at')->get();
+        return response()->json(['data'=>$employees]); 
     }
 
     /**
@@ -135,7 +141,16 @@ class EmployeeController extends Controller
                 ]);
             }
         $employee = Employee::find($id);
-        if($request->hasFile('image')){  
+        if($request->hasFile('image')){
+            $validated= $request->validate([
+             'image'  => 'mimes:jpg,png,gif,jpeg|required',
+            ]);
+            if(!is_array($validated) && $validated->fails()){
+            return response()->json([
+                'status'=>400,
+                 'error' => $validated->errors(),
+                ]);
+            }
             $input = $request->all();
              $image = $request->image;
              $extension = $image->getClientOriginalExtension();
@@ -143,7 +158,12 @@ class EmployeeController extends Controller
              $file = $file_name. '.' . $extension;
              $image->move(public_path('images'),$file);
              $input['image'] = $file;
-             $employee->update($input);
+             $employee->update([
+                'name'=>$request->name,
+                'fname'=>$request->fname,
+                'phone'=>$request->phone,
+                 'image'=>$request->$file,
+             ]);
             //  return Redirect::back()->with('success','successfully Updated');
 
         }else{
@@ -166,7 +186,6 @@ class EmployeeController extends Controller
     public function destroy($id)
     {
        $employee = Employee::find($id);
-    //    dd($employee);
        $employee->delete();
        return response()->json(['success'=>'Successfully Deleted']);
     //    return Redirect::back()->with('success','Successfully Deleted');

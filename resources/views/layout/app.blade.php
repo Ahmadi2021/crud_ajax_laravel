@@ -51,6 +51,37 @@
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 }
             });
+            fetch_data();
+        // Retrive Data
+        function fetch_data(){
+            $.ajax({
+                 type:'GET',
+                 url:'/ajax_index',
+                 contentType:false,
+                 processData:false,
+                 dataType:"json",
+                 success:function(response){
+                    $('.rows').html('');
+                    $.each(response.data,function($key,arr_value){
+                        $('tbody.rows').append(
+                            '<tr><td>'
+                               +arr_value.name +'</td>'
+                               +'<td>'+arr_value.fname +'</td>'
+                               +'<td>'+arr_value.phone +'</td>'
+                               +'<td><img src="images/'+arr_value.image +'" height="100px" width="100px" style="border-radius: 50%;"></td>'
+                               +'<td><button class="delete_button  action-icon"  data-id="'+arr_value.id+'"><i class="fa fa-trash" style="color:red;font-size:20px;float: right; margin-right: 20px;"></i></button>'
+                               +'<button class="update_emp action-icon" id="update_action_btn" data-id="'+arr_value.id+'"><i class="fa fa-edit" style="color:green;font-size:20px;float: right;margin-right: 20px;"></i></button>'
+
+                               
+                               +'</td></tr>');
+                    });
+                    
+                 },
+                 error(err){
+                     console.log(err);
+                 }
+            });
+        }
             // ////////////Close Button
             $('.model .close1').click(function(){
                $('.model ').removeClass('show-model_delete');
@@ -60,22 +91,29 @@
            });
         ////////// Delete Employee
             
-           $('.delete_button').click(function(){
+        $(document).on('click','.delete_button' ,function(){
+               var emp_id = $(this).attr('data-id');
+               $('.delete_submit').attr('data-id',emp_id);
                $('.model.delete').addClass('show-model_delete');
            });
-           $('.delete_emp').submit(function(event){
+           $(document).on('click','.delete_submit',function(event){
                event.preventDefault();
-               var emp_id = $('.update_emp').attr('data-id');
+            //    var emp_id = $('.delete_button').attr('data-id');
+               //alert('here');
+               var emp_id = $(this).attr('data-id');
                $.ajax({
                    type:"delete",
                    url:'/employee/'+emp_id,
                    contentType:false,
                    processData:false,
                    dataType: 'json',
+                //    data:emp_id,
                    success:function(response){
                     $('.model ').removeClass('show-model_delete');
+                    $('.delete_message ').html('');
                     $('.delete_message ').append('<div class="successSession">'+response.success +'</div>');
-                     console.log(response.success);
+                    fetch_data();
+                    console.log(response.success);
                    },
                });
            });
@@ -91,11 +129,12 @@
                $('.model.form').addClass('show-form');
                $('.errorSession ul').addClass('d-none');
                $('.success  .successSession').addClass('d-none');
+
            });
 
         // /////////////////////////////// Edit Employee 
     
-            $('.update_emp').click(function(){
+            $(document).on('click','.update_emp' ,function(){
                $('.header h2').text('Edit Employee');
                $('#action').val('edit');
                var emp_id = $(this).attr('data-id');
@@ -115,6 +154,8 @@
                  $('#name').val(response.data.name);
                  $('#fname').val(response.data.fname);
                  $('#phone').val(response.data.phone);
+                 $('#id').val(emp_id);
+                 
                 //$('#store_image').html("<img src='{{URL::to('/')}}/images/"+response.data.image +"' width=70 height=70 class='image-thumbnail'>");
                 },
               
@@ -143,9 +184,9 @@
                         $('.success .successSession').html('');
                         $('.errorSession ul').html('');
                         $('.success .successSession').removeClass('d-none');
-                         $('.successSession').append('<li>'+ response.success +' </li>');
+                         $('.success .successSession').append('<li>'+ response.success +' </li>');
                          $('#create_emp')[0].reset();
-
+                         fetch_data();
                      },
                  error(err){
                     console.log(formData);
@@ -174,10 +215,13 @@
               })
 
               }else if($('#action').val() == 'edit'){
-                 var emp_id = $('.update_emp').attr('data-id');
+                //   $('.update_emp').click(function(){
+                //     var emp_id = $('.update_emp').attr('data-id');
+                //   });  
+                
                 $('#method').attr('value','PUT');
                 var formData = new FormData($('#create_emp')[0]);
-                console.log(formData);
+                var emp_id = $('#id').val();
                 $.ajax({
                     type:"POST",
                     url:'/employee/'+emp_id,
@@ -190,9 +234,10 @@
                         console.log(response); 
                         $('.success .successSession').html('');
                         $('.errorSession ul').html('');
-                        $('.success .successSession').removeClass('d-none');
-                         $('.successSession').append('<li>'+ response.success +' </li>');
-                         $('#emp_table').location.reload();
+                        $('.success .successSession').removeClass('d-none'); 
+                         $('.success .successSession').append('<li>'+ response.success +' </li>');
+                         fetch_data();
+                         
                     },
                     error(err){
                         $('.success .successSession').html('');

@@ -26,3 +26,5 @@ Route::get('employe/create',[EmployeeController::class,'create'])->name('employe
 Route::delete('employee/{id}',[EmployeeController::class,'destroy'])->name('employee.destroy');
 Route::get('employee/{id}/edit',[EmployeeController::class,'edit'])->name('employee.edit');
 Route::put('employee/{id}',[EmployeeController::class,'update'])->name('employee.update');
+
+Route::get('ajax_index',[EmployeeController::class,'ajax_index'])->name('ajax_index');

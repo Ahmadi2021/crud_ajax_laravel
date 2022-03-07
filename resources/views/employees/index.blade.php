@@ -12,58 +12,43 @@
     {{-- <input type="submit" name="submit" class="delete_student" value="Delete"> --}}
 </div>
 <table id="emp_table">
-    <tr>
-      <th>name</th>
-      <th>Fathere Name</th>
-      <th>Phone</th>
-      <th>Profile image</th>
-      <th>Action</th>
-    </tr>
-    @foreach ($employees as $employee)
+    <thead> 
+        <tr>
+            <th>name</th>
+            <th>Fathere Name</th>
+            <th>Phone</th>
+            <th>Profile image</th>
+            <th>Action</th>
+          </tr>
+    </thead>
+    
+    {{-- @foreach ($employees as $employee) --}}
     <div class="model delete" >
         <div class="model-content">
             <span class="closeM close1">&times;</span>
             <p> Are Sure Delete item?  
              </p>
             <button class="close1 cancel">cancel</button>
-            <form action="{{ route('employee.destroy',$employee->id)}}" method="POST" id="delete_emp" 
-                data-id="{{$employee->id}}" class="delete_form delete_emp">
+            <form action="#" method="POST" id="delete_emp" 
+                class="delete_form delete_emp">
                @csrf   
                @method('DELETE')
-                <button type="submit" >Yes<i class="fa fa-trash" style="color:#fffff;font-size:20px;float: right; margin-right: 20px;">
+                <button type="submit" class='delete_submit'>Yes<i class="fa fa-trash" style="color:#fffff;font-size:20px;float: right; margin-right: 20px;">
                </i></button>
-           </form>
-            
-
+           </form>   
         </div>
    </div>
-        <tr>
-
-        <td>{{$employee->name}}</td>
-        <td>{{$employee->fname}}</td>
-        <td>{{$employee->phone}}</td>
-        <td style="text-align: center;">
-            <img  src="{{asset('/images/'.$employee->image)}}" height="100px" width="100px" style="border-radius: 50%;" >
-        </td>
-        <td>
-  
-        <button  class="delete_button  action-icon"><i class="fa fa-trash" style="color:red;font-size:20px;float: right; margin-right: 20px;">
-        </i></button>
-          
-            
-            {{-- <a href="{{route('employee.edit',$employee->id)}}"><i class="fa fa-edit" style="color:green;font-size:20px;float: right;margin-right: 20px;"></i></a> --}}
-            <button class="update_emp action-icon" id="update_action_btn" data-id='{{$employee->id}}'><i class="fa fa-edit" style="color:green;font-size:20px;float: right;margin-right: 20px;"></i></a>
-            <a href="{{ route('employee.show',$employee->id) }}"><i class="fa fa-eye" style="color:#066a6a;font-size:20px;float: right;margin-right: 20px;"></i></a>
-
-           
-       </td>
-        </tr>
-        <tr>  
-    @endforeach
+   <tbody class="rows">
+       
+ 
+   </tbody>
+       
+        {{-- <tr>   --}}
+    {{-- @endforeach --}}
   
   </table>
 
-{{ $employees->links() }}
+{{-- {{ $employees->links() }} --}}
 
 <div class="model form" >
     <div class="model-content">
@@ -89,8 +74,8 @@
         <ul class="successSession d-none"> </ul>
     </div>
     @csrf
-{{-- @method('put') --}}
-    
+
+    <input type="hidden" id="id" name='id' >
     <label for="name">First Name</label>
     <input type="text" id="name" name="name" class="@error('name') is-invalid @enderror" value="{{old('name')}}">
     <div class="errorSession name" id="error">
