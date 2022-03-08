@@ -126,12 +126,12 @@ class EmployeeController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
-    {  
+    { 
         $validated =$request->validate([
             'name'   => 'required',
             'fname' => 'required',
             'phone'  => 'required',
-            // 'image'  => 'mimes:jpg,png,gif,jpeg|required',
+             'image'  => 'mimes:jpg,png,gif,jpeg',
         ]);
 
         if(!is_array($validated) && $validated->fails()){
@@ -140,17 +140,31 @@ class EmployeeController extends Controller
                  'error' => $validated->errors(),
                 ]);
             }
-        $employee = Employee::find($id);
+        
+        $employee = Employee::where('id',$id)->first();
+        $input = $request->all();
         if($request->hasFile('image')){
-            $validated= $request->validate([
-             'image'  => 'mimes:jpg,png,gif,jpeg|required',
-            ]);
-            if(!is_array($validated) && $validated->fails()){
-            return response()->json([
-                'status'=>400,
-                 'error' => $validated->errors(),
-                ]);
-            }
+        $image = $request->image;
+        $extension = $image->getClientOriginalExtension();
+        $file_name = strtolower(Str::random(10));
+        $file = $file_name. '.' . $extension;
+        $image->move(public_path('images'),$file);
+        $input['image'] = $file;
+        }
+        $employee->update($input);
+        return response()->json(['success'=>'successfully Updated']);
+        // $employee = Employee::find($id);
+        if($request->hasFile('image')){
+           
+            // $validated= $request->validate([
+            //  'image'  => 'mimes:jpg,png,gif,jpeg|required',
+            // ]);
+            // if(!is_array($validated) && $validated->fails()){
+            // return response()->json([
+            //     'status'=>400,
+            //      'error' => $validated->errors(),
+            //     ]);
+            // }
             $input = $request->all();
              $image = $request->image;
              $extension = $image->getClientOriginalExtension();
@@ -158,11 +172,12 @@ class EmployeeController extends Controller
              $file = $file_name. '.' . $extension;
              $image->move(public_path('images'),$file);
              $input['image'] = $file;
+            // return response()->json(['success'=>'successfully Updated']);
              $employee->update([
                 'name'=>$request->name,
                 'fname'=>$request->fname,
                 'phone'=>$request->phone,
-                 'image'=>$request->$file,
+                 'image'=>$input['image'],
              ]);
             //  return Redirect::back()->with('success','successfully Updated');
 

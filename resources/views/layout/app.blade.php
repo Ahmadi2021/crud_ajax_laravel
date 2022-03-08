@@ -248,6 +248,7 @@
                         //     $('.errorSession ul').append('<li>*'+ arr_value +'</li>');
                         
                         // });
+                        
                         if(err.responseJSON.errors.name){
                             $('.name ul').append('<li>*'+err.responseJSON.errors.name[0] +'</li>');
                         }
